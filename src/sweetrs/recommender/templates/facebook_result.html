@@ -1,0 +1,49 @@
+{% extends "canvas.html" %}
+{% block content %}
+
+    Result has been calculated. Are you ready to see this? <input type="submit" value="Yes!" id="pub" /><br/><br/>
+    <div id="res" style="display:none">
+    <div style="text-align: center"><h2>Your result is</h2>
+
+    {% load thumbnail %}
+    {% with products_with_marks.0 as item %}
+        <img src="{% thumbnail item.photo 300x300 quality=75 crop %}" alt="" />
+        <h3>{{ item.name }}</h3>
+    </div>
+    </div>
+    <h2>What is sweetrs?</h2>
+<div style="text-alig: left;">It's a small scientific project which is subject of my master's thesis.
+    So have fun and contribute to science! More info <a href="http://sweetrs.org/" target="_blank">here</a>.</div>
+    <h2>Do you like it? Click "LIKE"!</h2>
+    It will help me in promoting this application.<br /><br />
+    <fb:like-box href="http://www.facebook.com/apps/application.php?id=199954626696783" width="292" show_faces="true" stream="false" header="false"></fb:like-box>
+    </div>
+<script>
+FB.UIServer.Methods["fbml.dialog"].size =  {width: 700, height: 400};
+$("#pub").click(function(){
+    $("#res").show().delay(500);
+    FB.ui(
+  {
+      method: 'stream.publish',
+      display: 'popup',
+      message: 'is the {{ item.name }}',
+      name: '{{ item.name }}',
+      caption: '{{ item.name }}',
+      description: (
+        'Contribute to SCIENTIFICT PROJECT and find out WHICH SWEET YOU ARE!'
+      ),
+      href: 'http://apps.facebook.com/sweetrs/',
+      link: 'http://apps.facebook.com/sweetrs/',
+      picture: '{% thumbnail item.photo 300x300 quality=75 crop %}'
+  },
+  function(response) {
+    if (response && response.post_id) {
+//      alert('Post was published.');
+    } else {
+//      alert('Post was not published.');
+    }
+  }
+)});
+</script>
+    {% endwith %}
+{% endblock %}
