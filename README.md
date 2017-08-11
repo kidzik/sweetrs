@@ -1,3 +1,3 @@
 # sweetrs
 
-Source code of https://sweetrs.org/
+Source code of http://sweetrs.org/
